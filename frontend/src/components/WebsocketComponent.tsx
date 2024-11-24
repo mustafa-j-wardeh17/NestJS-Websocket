@@ -4,6 +4,7 @@ import { WebsocketContext } from "../contexts/WebsocketContext"
 type MessagePayload = {
   content: string;
   msg: string;
+  id: string;
 }
 const WebsocketComponent = () => {
   const socket = useContext(WebsocketContext);
@@ -41,7 +42,8 @@ const WebsocketComponent = () => {
         <div className="w-[360px]">
           {messages.map((message, index) => (
             <div key={index}>
-              <p>{String(message.content)}</p>
+              <p>{message.id}</p>
+              <p>{message.content}</p>
             </div>
           ))}
         </div>

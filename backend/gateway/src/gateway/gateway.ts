@@ -1,11 +1,11 @@
 import { OnModuleInit } from "@nestjs/common";
-import { MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
-import { Server } from 'socket.io'
+import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
+import { Server, Socket } from 'socket.io'
 
 
 @WebSocketGateway({
-    cors:{
-        origin:['http://localhost:5173']  //// To access with frontend
+    cors: {
+        origin: ['http://localhost:5173']  //// To access with frontend
     }
 }) // This decorator indicates that this class is a WebSocket gateway. It uses a default port (e.g., 3000 in NestJS).
 
@@ -17,7 +17,7 @@ export class MyGateway implements OnModuleInit {
     @WebSocketServer()
     server: Server; // This property represents the WebSocket server instance (Socket.IO server).
 
-    
+
     // This lifecycle method is triggered when the module is initialized.
     onModuleInit() {
         // It sets up an event listener for client connections.
@@ -29,13 +29,14 @@ export class MyGateway implements OnModuleInit {
 
     // The gateway is now listening for events with the name 'newMessage'.
     @SubscribeMessage('newMessage')
-    onNewMessage(@MessageBody() body: any) {
+    onNewMessage(@MessageBody() body: any, @ConnectedSocket() client: Socket) {
         // This method is triggered when a 'newMessage' event is received.
 
         this.server.emit('onMessage', {
             // Emits an 'onMessage' event back to all connected clients with the following data:
             msg: 'New Message',
-            content: body
+            content: body,
+            id: client.id
         });
     }
 }
