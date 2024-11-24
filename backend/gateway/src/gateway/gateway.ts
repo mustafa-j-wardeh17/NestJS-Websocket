@@ -2,7 +2,13 @@ import { OnModuleInit } from "@nestjs/common";
 import { MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
 import { Server } from 'socket.io'
 
-@WebSocketGateway() // This decorator indicates that this class is a WebSocket gateway. It uses a default port (e.g., 3000 in NestJS).
+
+@WebSocketGateway({
+    cors:{
+        origin:['http://localhost:5173']  //// To access with frontend
+    }
+}) // This decorator indicates that this class is a WebSocket gateway. It uses a default port (e.g., 3000 in NestJS).
+
 //@WebSocketGateway(80) // Uncomment to change the WebSocket gateway to a custom port, such as 80.
 
 export class MyGateway implements OnModuleInit {
