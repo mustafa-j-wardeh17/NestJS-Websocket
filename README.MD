@@ -70,6 +70,7 @@ npm run start
 ```
 The Gateway server will start at http://localhost:3000
 
+---
 ### Setting Up the Socket Client Server (Backend)
 
 - Navigate to the Socket Client server folder:
@@ -92,6 +93,7 @@ npm run start
 The Gateway server will start at http://localhost:3001
 This will simulate a WebSocket client to interact with the Gateway server.
 
+---
 ### Setting Up the Frontend (React)
 
 - Navigate to the frontend folder:
