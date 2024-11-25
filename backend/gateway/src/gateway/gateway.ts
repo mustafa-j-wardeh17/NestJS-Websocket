@@ -39,4 +39,25 @@ export class MyGateway implements OnModuleInit {
             id: client.id
         });
     }
+
+    @SubscribeMessage('privateMessage')
+    onPrivateMessage(
+        @MessageBody() data: { to: string; message: string },
+        @ConnectedSocket() client: Socket
+    ) {
+        const { to, message } = data;
+
+        const targetSocket = this.server.sockets.sockets.get(to);
+        if (!targetSocket) {
+            client.emit('errorMessage', {
+                msg: 'Error Message',
+            })
+        }
+
+        this.server.to(targetSocket.id).emit('privateOnMessage', {
+            msg: 'New Message',
+            content: message,
+            id: client.id,
+        })
+    }
 }
