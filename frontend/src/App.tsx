@@ -7,7 +7,9 @@ function App() {
   return (
     <>
       <WebsocketProvider value={socket}>
-        <WebsocketComponent />
+        <div className='max-w-screen  min-h-screen overflow-hidden'>
+          <WebsocketComponent />
+        </div>
       </WebsocketProvider>
     </>
   )
